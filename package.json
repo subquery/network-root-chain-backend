@@ -1,0 +1,45 @@
+{
+  "name": "network-root-chain-backend",
+  "version": "0.0.1",
+  "description": "This project can be use as a starting point for developing your new Ethereum SubQuery project",
+  "main": "dist/index.js",
+  "scripts": {
+    "build:testnet": "subql build -f project-testnet.ts",
+    "codegen:testnet": "subql codegen -f project-testnet.ts",
+    "start:docker": "docker-compose pull && docker-compose up --remove-orphans",
+    "dev": "subql codegen && subql build && docker-compose pull && docker-compose up --remove-orphans",
+    "prepack": "rm -rf dist && npm run build",
+    "test": "subql build && subql-node-ethereum test"
+  },
+  "homepage": "https://github.com/subquery/network-root-chain-backend",
+  "repository": "github:subquery/network-root-chain-backend",
+  "files": [
+    "dist",
+    "schema.graphql",
+    "project.yaml"
+  ],
+  "author": "SubQuery Team",
+  "license": "MIT",
+  "dependencies": {
+    "@ethersproject/abi": "^5.7.0",
+    "@maticnetwork/pos-portal": "^1.5.2",
+    "@subql/common": "latest",
+    "@subql/contract-sdk": "^0.112.0",
+    "@subql/types-ethereum": "^3.2.1",
+    "@subql/validator": "latest",
+    "@types/pino": "^7.0.5",
+    "@types/validator": "latest",
+    "assert": "^2.0.0",
+    "bs58": "^4.0.1",
+    "ethers": "^5.7.2",
+    "pino": "^7.8.0"
+  },
+  "devDependencies": {
+    "@subql/cli": "latest",
+    "@subql/node-ethereum": "latest",
+    "@subql/testing": "latest",
+    "@subql/types": "latest",
+    "ethers": "^5.7.2",
+    "typescript": "latest"
+  }
+}
