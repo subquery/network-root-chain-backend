@@ -9,6 +9,8 @@ type LockedERC20 @entity {
 
 type CrossChainTransfer @entity {
   id: ID! # tx hash + ?
+  lockedERC20: LockedERC20! # address
+  toLockToken: Boolean! @index
   from: String!
   to: String!
   amount: BigInt!

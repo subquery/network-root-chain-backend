@@ -14,7 +14,7 @@ export declare type LockedERC20Event = TypedEvent<
 >;
 
 export interface ExitTokenInterface {
-  ExitTokenFunction(address: string, rootToken: string, log: BytesLike): void;
+  ExitTokenFunction(rootToken: string, log: BytesLike): void;
 }
 
 export type ExitTokenTransaction = EthereumTransaction<

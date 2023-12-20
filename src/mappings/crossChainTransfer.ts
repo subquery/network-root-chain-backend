@@ -17,6 +17,8 @@ export async function handleLockedERC20(
 
   const transfer = CrossChainTransfer.create({
     id: `${event.transactionHash}-${event.logIndex}`,
+    lockedERC20Id: rootToken,
+    toLockToken: true,
     from: depositor,
     to: depositReceiver,
     amount: amount.toBigInt(),
@@ -46,18 +48,21 @@ export async function handleExitToken(tx: ExitTokenTransaction) {
   logger.info("handleExitToken");
   assert(tx.args, "No event args");
 
-  const [address, rootToken, log] = tx.args;
+  const [rootToken, log] = tx.args;
   const logRLPList = RLP.decode(log) as Array<any>;
   const logTopicRLPList = logRLPList[1] as Array<any>;
   const amount = BigNumber.from(logRLPList[2]);
   const withdrawer = BigNumber.from(logTopicRLPList[1]);
+  const receiver = BigNumber.from(logTopicRLPList[2]);
 
   await updateLockedERC20(rootToken, BigNumber.from(0).sub(amount));
 
   const transfer = CrossChainTransfer.create({
     id: `${tx.hash}-${tx.transactionIndex}`,
-    from: address,
-    to: withdrawer.toHexString(),
+    lockedERC20Id: rootToken,
+    toLockToken: false,
+    from: withdrawer.toHexString(),
+    to: receiver.toHexString(),
     amount: amount.toBigInt(),
     blockHeight: BigInt(tx.blockNumber),
     timestamp: new Date(Number(tx.blockTimestamp) * 1000),
