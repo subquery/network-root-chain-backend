@@ -7,7 +7,7 @@
     "build:testnet": "subql build -f project-testnet.ts",
     "codegen:testnet": "subql codegen -f project-testnet.ts",
     "start:docker": "docker-compose pull && docker-compose up --remove-orphans",
-    "dev": "subql codegen && subql build && docker-compose pull && docker-compose up --remove-orphans",
+    "dev:testnet": "subql codegen -f project-testnet.ts && subql build -f project-testnet.ts && docker-compose -f docker-compose-testnet.yml pull && docker-compose -f docker-compose-testnet.yml up --remove-orphans",
     "prepack": "rm -rf dist && npm run build",
     "test": "subql build && subql-node-ethereum test"
   },
@@ -23,6 +23,7 @@
   "dependencies": {
     "@ethersproject/abi": "^5.7.0",
     "@maticnetwork/pos-portal": "^1.5.2",
+    "@openzeppelin/contracts": "^4.9.3",
     "@subql/common": "latest",
     "@subql/contract-sdk": "^0.112.0",
     "@subql/types-ethereum": "^3.2.1",

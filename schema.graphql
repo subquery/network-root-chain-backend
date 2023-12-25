@@ -2,19 +2,37 @@
 # Add the `@index` or `@index(unique: true)` annotation after any non-key field
 # https://academy.subquery.network/build/graphql.html#indexing-by-non-primary-key-field
 
-type LockedERC20 @entity {
-  id: ID! # address
-  amount: BigInt!
+type Sqtoken @entity {
+  id: ID! # token address
+  totalSupply: BigInt! # total supply
+  circulatingSupply: BigInt! # totalSupply - airdrop locked - staking locked - treasury holdings
+  tokenHolders: [TokenHolder] @derivedFrom(field: "token")
 }
 
-type CrossChainTransfer @entity {
-  id: ID! # tx hash + ?
-  lockedERC20: LockedERC20! # address
-  toLockToken: Boolean! @index
+type TokenHolder @entity {
+  id: ID! # holder address
+  balance: BigInt!
+  token: Sqtoken!
+}
+
+type Transfer @entity {
+  id: ID! # tx hash+eventidx
+  amount: BigInt!
   from: String!
   to: String!
-  amount: BigInt!
-  blockHeight: BigInt!
-  timestamp: Date!
   txHash: String!
+  timestamp: Date!
+  blockheight: BigInt!
+}
+
+type XcTransfer @entity {
+  id: ID! # tx hash+eventidx
+  tokenAddr: String!
+  fromRoot: Boolean! @index
+  amount: BigInt!
+  from: String! @index
+  to: String! @index
+  txHash: String!
+  timestamp: Date!
+  blockheight: BigInt! @index
 }

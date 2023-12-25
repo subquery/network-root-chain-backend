@@ -20,28 +20,28 @@ const x_ethereum = {
         file: "./node_modules/@subql/contract-sdk/artifacts/contracts/root/SQToken.sol/SQToken.json",
       },
     ],
-    [
-      "inflationController",
-      {
-        file: "./node_modules/@subql/contract-sdk/artifacts/contracts/root/InflationController.sol/InflationController.json",
-      },
-    ],
-    [
-      "polygonDestination",
-      {
-        file: "./node_modules/@subql/contract-sdk/artifacts/contracts/root/PolygonDestination.sol/PolygonDestination.json",
-      },
-    ],
-    [
-      "vesting",
-      {
-        file: "./node_modules/@subql/contract-sdk/artifacts/contracts/Vesting.sol/Vesting.json",
-      },
-    ],
+    // [
+    //   "inflationController",
+    //   {
+    //     file: "./node_modules/@subql/contract-sdk/artifacts/contracts/root/InflationController.sol/InflationController.json",
+    //   },
+    // ],
+    // [
+    //   "polygonDestination",
+    //   {
+    //     file: "./node_modules/@subql/contract-sdk/artifacts/contracts/root/PolygonDestination.sol/PolygonDestination.json",
+    //   },
+    // ],
+    // [
+    //   "vesting",
+    //   {
+    //     file: "./node_modules/@subql/contract-sdk/artifacts/contracts/Vesting.sol/Vesting.json",
+    //   },
+    // ],
     [
       "eRC20Predicate",
       {
-        file: "./node_modules/@maticnetwork/pos-portal/contracts/root/TokenPredicates/ERC20Predicate.sol",
+        file: "./artifacts/ERC20Predicate.json",
       },
     ],
   ]),
@@ -81,7 +81,7 @@ const project: EthereumProject = {
      * If you use a rate limited endpoint, adjust the --batch-size and --workers parameters
      * These settings can be found in your docker-compose.yaml, they will slow indexing but prevent your project being rate limited
      */
-    endpoint: ["https://eth.api.onfinality.io/public"],
+    endpoint: ["https://rpc.ankr.com/eth_goerli"],
   },
   dataSources: [
     {
@@ -94,81 +94,74 @@ const project: EthereumProject = {
         file: "./dist/index.js",
         handlers: [
           {
-            kind: EthereumHandlerKind.Call,
-            handler: "handleMint",
+            kind: EthereumHandlerKind.Event,
+            handler: "handleTransfer",
             filter: {
-              function: "mint(address destination, uint256 amount)",
-            },
-          },
-          // {
-          //   kind: EthereumHandlerKind.Event,
-          //   handler: "handleLog",
-          //   filter: {
-          //     /**
-          //      * Follows standard log filters https://docs.ethers.io/v5/concepts/events/
-          //      * address: "0x60781C2586D68229fde47564546784ab3fACA982"
-          //      */
-          //     topics: [
-          //       "Transfer(address indexed from, address indexed to, uint256 amount)",
-          //     ],
-          //   },
-          // },
-        ],
-      },
-    },
-    {
-      ...x_ethereum,
-      options: {
-        abi: "inflationController",
-        address: "0xB612080559f0102C5d60A034C841D72b7709ffE6",
-      },
-      mapping: {
-        file: "./dist/index.js",
-        handlers: [
-          {
-            kind: EthereumHandlerKind.Call,
-            handler: "handleSetInflationDestination",
-            filter: {
-              function:
-                "setInflationDestination(address _inflationDestination)",
-            },
-          },
-          {
-            kind: EthereumHandlerKind.Call,
-            handler: "handleMintInflatedTokens",
-            filter: {
-              function: "mintInflatedTokens()",
-            },
-          },
-          {
-            kind: EthereumHandlerKind.Call,
-            handler: "handleMintSQT",
-            filter: {
-              function: "mintSQT(address _destination, uint256 _amount)",
+              /**
+               * Follows standard log filters https://docs.ethers.io/v5/concepts/events/
+               * address: "0x60781C2586D68229fde47564546784ab3fACA982"
+               */
+              topics: [
+                "Transfer(address indexed from, address indexed to, uint256 amount)",
+              ],
             },
           },
         ],
       },
     },
-    {
-      ...x_ethereum,
-      options: {
-        abi: "polygonDestination",
-        address: "0x3519c8939b73EAA440A5b626D6090275add4bD69",
-      },
-      mapping: {
-        file: "./dist/index.js",
-        handlers: [
-          {
-            kind: EthereumHandlerKind.Call,
-            handler: "handleAfterReceiveInflatedTokens",
-            filter: {
-              function: "afterReceiveInflatedTokens(uint256 tokenAmount)",
-            },
-          },
-        ],
-      },
-    },
+    // {
+    //   ...x_ethereum,
+    //   options: {
+    //     abi: "inflationController",
+    //     address: "0xB612080559f0102C5d60A034C841D72b7709ffE6",
+    //   },
+    //   mapping: {
+    //     file: "./dist/index.js",
+    //     handlers: [
+    //       {
+    //         kind: EthereumHandlerKind.Call,
+    //         handler: "handleSetInflationDestination",
+    //         filter: {
+    //           function:
+    //             "setInflationDestination(address _inflationDestination)",
+    //         },
+    //       },
+    //       {
+    //         kind: EthereumHandlerKind.Call,
+    //         handler: "handleMintInflatedTokens",
+    //         filter: {
+    //           function: "mintInflatedTokens()",
+    //         },
+    //       },
+    //       {
+    //         kind: EthereumHandlerKind.Call,
+    //         handler: "handleMintSQT",
+    //         filter: {
+    //           function: "mintSQT(address _destination, uint256 _amount)",
+    //         },
+    //       },
+    //     ],
+    //   },
+    // },
+    // {
+    //   ...x_ethereum,
+    //   options: {
+    //     abi: "polygonDestination",
+    //     address: "0x3519c8939b73EAA440A5b626D6090275add4bD69",
+    //   },
+    //   mapping: {
+    //     file: "./dist/index.js",
+    //     handlers: [
+    //       {
+    //         kind: EthereumHandlerKind.Call,
+    //         handler: "handleAfterReceiveInflatedTokens",
+    //         filter: {
+    //           function: "afterReceiveInflatedTokens(uint256 tokenAmount)",
+    //         },
+    //       },
+    //     ],
+    //   },
+    // },
     {
       ...x_ethereum,
       options: {
@@ -184,17 +177,20 @@ const project: EthereumProject = {
             filter: {
               topics: [
                 "LockedERC20(address indexed depositor, address indexed depositReceiver, address indexed rootToken, uint256 amount)",
+                null,
+                null,
+                "",
               ],
             },
           },
-          {
-            kind: EthereumHandlerKind.Call,
-            handler: "handleExitToken",
-            filter: {
-              function:
-                "exitToken(address, address rootToken, bytes memory log)",
-            },
-          },
+          // {
+          //   kind: EthereumHandlerKind.Call,
+          //   handler: "handleExitToken",
+          //   filter: {
+          //     function:
+          //       "exitToken(address, address rootToken, bytes memory log)",
+          //   },
+          // },
         ],
       },
     },

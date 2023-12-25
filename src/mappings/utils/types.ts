@@ -20,3 +20,14 @@ export interface ExitTokenInterface {
 export type ExitTokenTransaction = EthereumTransaction<
   Parameters<ExitTokenInterface["ExitTokenFunction"]>
 >;
+
+export interface TransferEventObject {
+  from: string;
+  to: string;
+  value: BigNumber;
+}
+
+export declare type TransferEvent = TypedEvent<
+  [string, string, BigNumber],
+  TransferEventObject
+>;
