@@ -6,18 +6,18 @@ import {
 
 const x_ethereum = {
   kind: EthereumDatasourceKind.Runtime,
-  startBlock: 10213710,
+  startBlock: 10194050,
   assets: new Map([
-    // [
-    //   "rootChainManager",
-    //   {
-    //     file: "./node_modules/@subql/contract-sdk/artifacts/contracts/mocks/RootChainManager.sol/RootChainManager.json",
-    //   },
-    // ],
     [
       "sQToken",
       {
         file: "./node_modules/@subql/contract-sdk/artifacts/contracts/root/SQToken.sol/SQToken.json",
+      },
+    ],
+    [
+      "eRC20Predicate",
+      {
+        file: "./artifacts/ERC20Predicate.json",
       },
     ],
     // [
@@ -38,12 +38,6 @@ const x_ethereum = {
     //     file: "./node_modules/@subql/contract-sdk/artifacts/contracts/Vesting.sol/Vesting.json",
     //   },
     // ],
-    [
-      "eRC20Predicate",
-      {
-        file: "./artifacts/ERC20Predicate.json",
-      },
-    ],
   ]),
 };
 
@@ -81,7 +75,7 @@ const project: EthereumProject = {
      * If you use a rate limited endpoint, adjust the --batch-size and --workers parameters
      * These settings can be found in your docker-compose.yaml, they will slow indexing but prevent your project being rate limited
      */
-    endpoint: ["https://rpc.ankr.com/eth_goerli"],
+    endpoint: ["https://rpc.ankr.com/eth_goerli"]
   },
   dataSources: [
     {
@@ -109,59 +103,6 @@ const project: EthereumProject = {
         ],
       },
     },
-    // {
-    //   ...x_ethereum,
-    //   options: {
-    //     abi: "inflationController",
-    //     address: "0xB612080559f0102C5d60A034C841D72b7709ffE6",
-    //   },
-    //   mapping: {
-    //     file: "./dist/index.js",
-    //     handlers: [
-    //       {
-    //         kind: EthereumHandlerKind.Call,
-    //         handler: "handleSetInflationDestination",
-    //         filter: {
-    //           function:
-    //             "setInflationDestination(address _inflationDestination)",
-    //         },
-    //       },
-    //       {
-    //         kind: EthereumHandlerKind.Call,
-    //         handler: "handleMintInflatedTokens",
-    //         filter: {
-    //           function: "mintInflatedTokens()",
-    //         },
-    //       },
-    //       {
-    //         kind: EthereumHandlerKind.Call,
-    //         handler: "handleMintSQT",
-    //         filter: {
-    //           function: "mintSQT(address _destination, uint256 _amount)",
-    //         },
-    //       },
-    //     ],
-    //   },
-    // },
-    // {
-    //   ...x_ethereum,
-    //   options: {
-    //     abi: "polygonDestination",
-    //     address: "0x3519c8939b73EAA440A5b626D6090275add4bD69",
-    //   },
-    //   mapping: {
-    //     file: "./dist/index.js",
-    //     handlers: [
-    //       {
-    //         kind: EthereumHandlerKind.Call,
-    //         handler: "handleAfterReceiveInflatedTokens",
-    //         filter: {
-    //           function: "afterReceiveInflatedTokens(uint256 tokenAmount)",
-    //         },
-    //       },
-    //     ],
-    //   },
-    // },
     {
       ...x_ethereum,
       options: {
@@ -179,18 +120,10 @@ const project: EthereumProject = {
                 "LockedERC20(address indexed depositor, address indexed depositReceiver, address indexed rootToken, uint256 amount)",
                 null,
                 null,
-                "",
+                "0x000000000000000000000000afd07fab547632d574b38a72edae93fa23d1e7d7",
               ],
             },
           },
-          // {
-          //   kind: EthereumHandlerKind.Call,
-          //   handler: "handleExitToken",
-          //   filter: {
-          //     function:
-          //       "exitToken(address, address rootToken, bytes memory log)",
-          //   },
-          // },
         ],
       },
     },

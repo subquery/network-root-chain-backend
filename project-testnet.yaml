@@ -20,7 +20,7 @@ network:
     - https://rpc.ankr.com/eth_goerli
 dataSources:
   - kind: ethereum/Runtime
-    startBlock: 10213710
+    startBlock: 10194050
     assets:
       sQToken:
         file: >-
@@ -41,7 +41,7 @@ dataSources:
                 Transfer(address indexed from, address indexed to, uint256
                 amount)
   - kind: ethereum/Runtime
-    startBlock: 10213710
+    startBlock: 10194050
     assets:
       sQToken:
         file: >-
@@ -63,5 +63,6 @@ dataSources:
                 depositReceiver, address indexed rootToken, uint256 amount)
               - null
               - null
-              - ''
+              - >-
+                0x000000000000000000000000afd07fab547632d574b38a72edae93fa23d1e7d7
 repository: https://github.com/subquery/network-root-chain-backend

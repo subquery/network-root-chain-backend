@@ -4,8 +4,8 @@
   "description": "This project can be use as a starting point for developing your new Ethereum SubQuery project",
   "main": "dist/index.js",
   "scripts": {
-    "build:testnet": "subql build -f project-testnet.ts",
     "codegen:testnet": "subql codegen -f project-testnet.ts",
+    "build:testnet": "subql build -f project-testnet.ts",
     "start:docker": "docker-compose pull && docker-compose up --remove-orphans",
     "dev:testnet": "subql codegen -f project-testnet.ts && subql build -f project-testnet.ts && docker-compose -f docker-compose-testnet.yml pull && docker-compose -f docker-compose-testnet.yml up --remove-orphans",
     "prepack": "rm -rf dist && npm run build",
@@ -28,19 +28,21 @@
     "@subql/contract-sdk": "^0.112.0",
     "@subql/types-ethereum": "^3.2.1",
     "@subql/validator": "latest",
-    "@types/pino": "^7.0.5",
-    "@types/validator": "latest",
-    "assert": "^2.0.0",
-    "bs58": "^4.0.1",
+    "assert": "^2.1.0",
+    "atob": "^2.1.2",
+    "bs58": "^5.0.0",
+    "btoa": "^1.2.1",
     "ethers": "^5.7.2",
-    "pino": "^7.8.0"
+    "pino": "^8.17.1"
   },
   "devDependencies": {
     "@subql/cli": "latest",
     "@subql/node-ethereum": "latest",
     "@subql/testing": "latest",
     "@subql/types": "latest",
-    "ethers": "^5.7.2",
+    "@types/atob": "^2.1.4",
+    "@types/btoa": "^1.2.5",
+    "@types/validator": "latest",
     "typescript": "latest"
   }
 }
