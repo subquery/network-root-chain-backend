@@ -17,9 +17,12 @@ async function isReservedContract(address: string): Promise<boolean> {
     chainId = (await api.getNetwork()).chainId;
   }
   const addresses = chainIdToReservedContractAddresses[chainId];
-  return [addresses.eRC20DedicateAddress, addresses.sQTokenAddress].includes(
-    ethers.utils.getAddress(address)
-  );
+  return [
+    addresses.eRC20DedicateAddress,
+    addresses.sQTokenAddress,
+    addresses.vestingAddress,
+    addresses.inflationControllerAddress,
+  ].includes(ethers.utils.getAddress(address));
 }
 
 async function isXcPredicateContract(address: string): Promise<boolean> {
